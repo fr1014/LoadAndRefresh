@@ -27,6 +27,7 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
         if (mView == null){
             binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
             mView = binding.getRoot();
+            initView();
         }else {
             ViewGroup parent = (ViewGroup) mView.getParent();
             if (parent != null){
@@ -37,6 +38,8 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
         return mView;
     }
 
+    protected abstract void initView();
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -44,7 +47,7 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
         tryLoadData();
     }
 
-    public abstract void initData();
+    protected abstract void initData();
 
     public abstract int initContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 

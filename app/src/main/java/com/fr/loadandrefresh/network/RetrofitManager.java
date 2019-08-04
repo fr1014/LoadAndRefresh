@@ -60,41 +60,41 @@ public class RetrofitManager {
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)  //写数据超时时间阈值
                 .retryOnConnectionFailure(true)     //错误重连
                 .cache(cache)
-                .addNetworkInterceptor(new HttpCacheInterceptor())
+//                .addNetworkInterceptor(new HttpCacheInterceptor())
                 .build();
     }
 
-    //缓存策略
-    private class HttpCacheInterceptor implements Interceptor {
-
-        @NotNull
-        @Override
-        public Response intercept(@NotNull Chain chain) throws IOException {
-            okhttp3.Request request = chain.request();
-            if (!NetStatusUtil.isConnected(BaseApplication.getContext())) {
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build();
-            }
-
-            Response response = chain.proceed(request);
-
-            if (NetStatusUtil.isConnected(BaseApplication.getContext())) {
-                int maxAge = 60; // read from cache for 1 minute
-                response.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, max-age=" + maxAge)
-                        .build();
-            } else {
-                int maxStale = 60 * 60 * 24 * 7; // tolerate 1-weeks stale
-                response.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                        .build();
-            }
-            return response;
-        }
-    }
+//    //缓存策略
+//    private class HttpCacheInterceptor implements Interceptor {
+//
+//        @NotNull
+//        @Override
+//        public Response intercept(@NotNull Chain chain) throws IOException {
+//            okhttp3.Request request = chain.request();
+//            if (!NetStatusUtil.isConnected(BaseApplication.getContext())) {
+//                request = request.newBuilder()
+//                        .cacheControl(CacheControl.FORCE_CACHE)
+//                        .build();
+//            }
+//
+//            Response response = chain.proceed(request);
+//
+//            if (NetStatusUtil.isConnected(BaseApplication.getContext())) {
+//                int maxAge = 60; // read from cache for 1 minute
+//                response.newBuilder()
+//                        .removeHeader("Pragma")
+//                        .header("Cache-Control", "public, max-age=" + maxAge)
+//                        .build();
+//            } else {
+//                int maxStale = 60 * 60 * 24 * 7; // tolerate 1-weeks stale
+//                response.newBuilder()
+//                        .removeHeader("Pragma")
+//                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+//                        .build();
+//            }
+//            return response;
+//        }
+//    }
 
     public static Request getRequest() {
         if (request == null) {

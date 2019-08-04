@@ -33,7 +33,7 @@ public class ClassifiedFragment extends BaseFragment<FragmentClassifiedBinding> 
     }
 
     @Override
-    public void initData() {
+    protected void initView() {
         mTabLayout = binding.tabs;
         mViewPager = binding.viewpager;
         mTitles = new ArrayList<>();
@@ -55,6 +55,11 @@ public class ClassifiedFragment extends BaseFragment<FragmentClassifiedBinding> 
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void initData() {
+
     }
 
 }

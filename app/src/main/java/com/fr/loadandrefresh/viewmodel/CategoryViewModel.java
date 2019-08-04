@@ -1,11 +1,14 @@
 package com.fr.loadandrefresh.viewmodel;
 
 
+import androidx.fragment.app.Fragment;
+
 import com.fr.loadandrefresh.bean.ItemBean;
 import com.fr.loadandrefresh.constant.MainConstant;
 import com.fr.loadandrefresh.model.CategoryModel;
 import com.fr.loadandrefresh.view.IView.ICategoryView;
 import com.fr.loadandrefresh.view.adapter.RVBeanAdapter;
+import com.fr.loadandrefresh.view.fragment.ClassifiedChildFragment;
 import com.fr.loadandrefresh.view.listener.BaseLoadListener;
 
 import java.util.List;
@@ -21,11 +24,13 @@ public class CategoryViewModel extends BaseViewModel<RVBeanAdapter> implements B
     private String mCategory;
     private int mCurrPage = 1; //当前页面
     private int mLoadType; //加载数据的类型
+    private ClassifiedChildFragment mClassifiedChildFragment;
 
-    public CategoryViewModel(ICategoryView iCategoryView, RVBeanAdapter adapter, String category) {
+    public CategoryViewModel(Fragment fragment, ICategoryView iCategoryView, RVBeanAdapter adapter, String category) {
         super(adapter);
         this.mICategoryView = iCategoryView;
         this.mCategory = category;
+        this.mClassifiedChildFragment = (ClassifiedChildFragment) fragment;
         getData();
     }
 
@@ -58,7 +63,7 @@ public class CategoryViewModel extends BaseViewModel<RVBeanAdapter> implements B
             adapter.loadMoreData(list);
         }else {
             //第一次加载或者下拉刷新的数据
-            adapter.refreshData(list);
+            mClassifiedChildFragment.initRecyclerViewAnim(list);
         }
     }
 
