@@ -13,8 +13,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
     private List<String> mTitles;
 
-    public FragmentAdapter(FragmentManager fm,List<Fragment> fragments, List<String> titles) {
-        super(fm);
+    public FragmentAdapter(@NonNull FragmentManager fm,List<Fragment> fragments, List<String> titles, int behavior) {
+        super(fm, behavior);
         mFragments = fragments;
         mTitles = titles;
     }

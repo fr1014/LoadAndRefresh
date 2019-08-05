@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fr.loadandrefresh.R;
@@ -51,7 +52,7 @@ public class ClassifiedFragment extends BaseFragment<FragmentClassifiedBinding> 
             mFragments.add(classifiedChildFragment);
         }
 
-        mFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), mFragments, mTitles);
+        mFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), mFragments, mTitles, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);
